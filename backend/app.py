@@ -1,9 +1,9 @@
 # Flask backend
-
+import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from predictor import predict_fight_outcome, model, fighter_profiles
-from fighter_query import retrieve_fighter
+from .predictor import predict_fight_outcome, model, fighter_profiles
+from .fighter_query import retrieve_fighter
 
 
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
@@ -36,4 +36,5 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=False, port=80)
+    port = int(os.environ.get('PORT', 33507))
+    app.run(host='0.0.0.0', debug=False, port=port)

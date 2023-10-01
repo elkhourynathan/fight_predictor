@@ -4,7 +4,7 @@ import sqlite3
 # # from langchain.agents import create_sql_agent, AgentType
 # from langchain.agents.agent_toolkits import SQLDatabaseToolkit
 from dotenv import load_dotenv
-from webscraper import scrape_fighter_details
+from .webscraper import scrape_fighter_details
 
 load_dotenv()
 
