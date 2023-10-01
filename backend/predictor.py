@@ -1,8 +1,15 @@
+import os
 import pandas as pd
 import joblib
 
-model = joblib.load('/Users/nathanelkhoury/Documents/code/projects/fight_predictor/backend/ml/logreg_fight_predictor.pkl')
-fighter_profiles = pd.read_csv('/Users/nathanelkhoury/Documents/code/projects/fight_predictor/backend/ml/fighter_profiles.csv')
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+model_path = os.path.join(current_dir, 'ml', 'logreg_fight_predictor.pkl')
+csv_path = os.path.join(current_dir, 'ml', 'fighter_profiles.csv')
+
+model = joblib.load(model_path)
+fighter_profiles = pd.read_csv(csv_path)
 
 def predict_fight_outcome(model, fighter1, fighter2, fighter_profiles):
     # Look up the profiles of the two fighters

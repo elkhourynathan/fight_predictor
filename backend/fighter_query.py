@@ -23,9 +23,13 @@ load_dotenv()
 # )
 
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+db_path = os.path.join(current_dir, 'database', 'ufc_data.db')
+
 def retrieve_fighter_previous_fights(fighter_name):
 
-    with sqlite3.connect(database="/Users/nathanelkhoury/Documents/code/projects/fight_predictor/backend/database/ufc_data.db") as conn:
+    with sqlite3.connect(database=db_path) as conn:
         cursor = conn.cursor()
         cursor.execute(f'''SELECT "Fighter1", "Fighter2", "Result", "Method", "Round", "Strikes_Fighter1", "Strikes_Fighter2", "TD_Fighter1", "TD_Fighter2", "Sub_Fighter1", "Sub_Fighter2" FROM ufc_event_data WHERE "Fighter1" = ? OR "Fighter2" = ?;''', (fighter_name, fighter_name))
         rows = cursor.fetchall()
@@ -99,7 +103,7 @@ def retrieve_fighter_previous_fights(fighter_name):
         return data
 
 def retrieve_fighter(fighter_name):
-    with sqlite3.connect(database="/Users/nathanelkhoury/Documents/code/projects/fight_predictor/backend/database/ufc_data.db") as conn:
+    with sqlite3.connect(database=db_path) as conn:
         try:
             cursor = conn.cursor()
             cursor.execute(f'SELECT * from ufc_fighter_data WHERE "Name" = ?;', (fighter_name,))

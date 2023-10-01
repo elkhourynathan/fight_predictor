@@ -3,7 +3,7 @@ import axios from "axios";
 import Fightcard from "./Fightcard";
 
 
-const host = "http://localhost:8000";
+const host = "http://0.0.0.0:5001:8000";
 
 function Dashboard() {
   const fetchFighterData = (e) => {
