@@ -3,8 +3,6 @@ import axios from "axios";
 import Fightcard from "./Fightcard";
 
 
-const host = "http://0.0.0.0:5001:8000";
-
 function Dashboard() {
   const fetchFighterData = (e) => {
     e.preventDefault();
@@ -13,7 +11,7 @@ function Dashboard() {
       fighter2: fighterName2,
     };
     axios
-      .post(`${host}/predict`, fighterObject)
+      .post(`/predict`, fighterObject)
       .then((response) => {
         let fighter1 = { fighter: response.data.fighter1};
         let fighter2 = { fighter: response.data.fighter2};
