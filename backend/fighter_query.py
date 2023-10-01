@@ -1,25 +1,27 @@
 import os
 import sqlite3
-from langchain import OpenAI, SQLDatabase
-from langchain.agents import create_sql_agent, AgentType
-from langchain.agents.agent_toolkits import SQLDatabaseToolkit
+# # # from langchain import OpenAI, SQLDatabase
+# # from langchain.agents import create_sql_agent, AgentType
+# from langchain.agents.agent_toolkits import SQLDatabaseToolkit
 from dotenv import load_dotenv
+from webscraper import scrape_fighter_details
 
 load_dotenv()
 
-dburi = os.getenv("DBURI")
-db = SQLDatabase.from_uri(dburi)
+# dburi = os.getenv("DBURI")
+# db = SQLDatabase.from_uri(dburi)
 
-llm = OpenAI(temperature=0)
+# llm = OpenAI(temperature=0)
 
-toolkit = SQLDatabaseToolkit(db=db, llm=llm)
+# toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 
-sql_agent = create_sql_agent(
-    llm=llm,
-    toolkit=toolkit,
-    verbose=True,
-    agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION
-)
+# sql_agent = create_sql_agent(
+#     llm=llm,
+#     toolkit=toolkit,
+#     verbose=True,
+#     agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION
+# )
+
 
 def retrieve_fighter_previous_fights(fighter_name):
 
@@ -89,16 +91,53 @@ def retrieve_fighter_previous_fights(fighter_name):
             "strikesLanded": total_strikes_jones - total_strikes_opponents,
             "takedownsLanded": total_takedowns_jones - total_takedowns_opponents,
             "submissionsLanded": total_subs_jones - total_subs_opponents,
-            "wins": wins,
-            "losses": losses,
-            "draws": draws,
-            "winPercentage": win_percentage,
             "averageRoundWon": avg_round_won,
-            "averageRoundLost": avg_round_lost
+            "averageRoundLost": avg_round_lost,
+            "fighterStats": retrieve_fighter(fighter_name)
         }
 
         return data
 
-print(retrieve_fighter_previous_fights("Leon Edwards"))
+def retrieve_fighter(fighter_name):
+    with sqlite3.connect(database="database/ufc_data.db") as conn:
+        try:
+            cursor = conn.cursor()
+            cursor.execute(f'SELECT * from ufc_fighter_data WHERE "Name" = ?;', (fighter_name,))
+            rows = cursor.fetchall()
+            row = rows[0]
+            print(rows)
+            first_name = row[0]
+            last_name = row[1]
+            nickname = row[2]
+            height = row[3]
+            weight = row[4]
+            reach = row[5]
+            stance = row[6]
+            wins = row[7]
+            losses = row[8]
+            draws = row[9]
+            image_url = scrape_fighter_details(fighter_name)["image_url"]
+            returnObj = {
+                "name": f'{first_name} {last_name}',
+                "image_url": image_url,
+                "nickname": nickname,
+                "height": height,
+                "weight": weight,
+                "reach": reach,
+                "stance": stance,
+                "wins": wins,
+                "losses": losses,
+                "draws": draws,
+                "winpercentage": f"{(wins / (wins + losses + draws)) * 100:.2f}%"
+            } 
 
+            return returnObj
+        except:
+            return None
+
+
+# # print(retrieve_fighter("Conor McGregor"))
+# print(retrieve_fighter("Khabib Nurmagomedov"))
+# print(retrieve_fighter_previous_fights("Jon Jones"))
+# print(retrieve_fighter_previous_fights("Conor McGregor"))
 # sql_agent.run('Take in account number of strikes landed, number of takedowns landed, and number of submission attempts from all previous fights including the fighter Jon Jones and provide an analysis on him. For example if the fighter landed 100 strikes and his opponent landed 50 mark him down as +50. Provide the data in a structured json object of the form: {"name":"___","strikeslanded":"___" ...} where there are underlines insert the data calculated')
