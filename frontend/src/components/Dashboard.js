@@ -12,7 +12,7 @@ function Dashboard() {
       fighter2: fighterName2,
     };
     axios
-      .post(`http://127.0.0.1:8000/predict`, fighterObject)
+      .post(`/predict`, fighterObject)
       .then((response) => {
         let fighter1 = { fighter: response.data.fighter1 };
         let fighter2 = { fighter: response.data.fighter2 };
