@@ -1,17 +1,16 @@
 *{
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 html, body {
-  height: 100%;
-  width: 100%;
+  background-color: #19181e;
 }
 
 .container {
-  height: 100vh;
-  background-color: #19181e;
+  min-height: 100vh;
   color: white;
   display: flex;
   flex-direction: row;
@@ -28,10 +27,9 @@ html, body {
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.6); 
   border-radius: 10px;
-  min-width: 300px;
-  min-height: 400px; 
+  min-width: 30vh;
+  min-height: 50vh; 
   color: white;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   border: 1px solid white;
@@ -79,7 +77,8 @@ html, body {
   flex-direction: column;
   justify-content: center;  
   align-items: center;  
-  height: 100%;  
+  min-width: 30vh;
+  min-height: 50vh;
 }
 
 .predictor-title h1 {
@@ -141,4 +140,61 @@ Select {
   border-radius: 5px;
   font-size: 1rem;
   background-color: rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 1300px){
+
+  .predictor-column {
+    min-width: 10vh;
+    min-height: 50vh;
+  }
+
+  .fightcard-container {
+    min-width: 20vh;
+    min-height: 40vh;
+  }
+  .predictor-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+    align-items: center;  
+    min-width: 15vh;
+    min-height: 50vh;
+  }
+  
+  .predictor-title h1 {
+    font-size: 30px;
+    margin-top: 0;
+    margin-bottom: 10px; 
+  }
+  
+  .predictor-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+    gap: 15px;  
+  }
+  
+  .predictor-form form {
+    display: flex;
+    flex-direction: column;
+    min-width: 15vh;
+    gap: 15px;  
+  }
+
+}
+
+@media (max-width: 868px) {
+  .container {
+      flex-direction: column; 
+  }
+  
+  .fighter-card, .predictor-column {
+      width: 100%; 
+  }
+  
+  .fightcard-container {
+    min-height: 10vh;
+    min-width: 10vh;
+  }
 }
