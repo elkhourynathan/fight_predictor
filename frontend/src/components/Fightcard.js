@@ -19,7 +19,7 @@ function Fightcard({ fighter_data }) {
     : baseStyle;
 
   return (
-    <div className="fightcard" style={backgroundImageStyle}>
+    <div className="fightcard-container" style={backgroundImageStyle}>
         <div className="fighter-info">
             <div className="fighter-name">
             <div className="first-name">{fighter.name.split(' ')[0]}</div>

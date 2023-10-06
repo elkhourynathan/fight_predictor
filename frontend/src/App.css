@@ -1,201 +1,144 @@
-* {
+*{
   margin: 0;
   padding: 0;
-  color: white;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-html, body, #root {
+html, body {
   height: 100%;
-}
-
-p {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.app{
   width: 100%;
-  height: 100%;
-  background-color: #19181e;
 }
 
 .container {
+  height: 100vh;
+  background-color: #19181e;
+  color: white;
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
-  padding: 5px;
-  margin: auto;
-  height: 100%;
-  width: 80%; 
+  justify-content: center;
 }
 
+.fighter-card, .predictor-column {
+  margin: 10px;
+  padding: 10px;
+}
 
-.column {
+.fightcard-container {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.6); 
+  border-radius: 10px;
+  min-width: 300px;
+  min-height: 400px; 
+  color: white;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-width: 33%;
-  padding: 10px; 
-  margin: 5px;
-}
-
-
-.analysis p {
-  font-size: 16px;
-}
-
-.fightcard {
-  border: 2px solid white;
-  border-radius: 10px;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 50vh;
-}
-
-.fighter-info, .fighter-stats {
-  position: absolute; 
-  color: #ffffff; 
-  width: 100%;  
-  padding: 1%;  
+  border: 1px solid white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
 }
 
 .fighter-info {
-  top: 3%;
-  left: 3%;
+  align-self: flex-start;
+  margin-bottom: 15px;
 }
 
-.fighter-name .first-name, .fighter-name .last-name {
-  font-size: 26px;
-  display: block;
+.fighter-name {
+  font-size: 24px;
 }
 
-.fightcard .fighter-info, .fightcard .fighter-stats {
-  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
-}
-.fightcard .fighter-info, .fightcard .fighter-stats p {
-  font-size: 16px;
+.first-name {
+  display: block; 
+  font-weight: normal;
 }
 
-.nick-name {
-  color: #a8a8ac;
-}
-
-.fighter-name .last-name {
+.last-name {
+  display: block; 
   font-weight: bold; 
 }
 
+.nick-name {
+  font-size: 18px;
+  font-style: italic;
+  margin-top: 5px;
+  color: gray; 
+}
+
 .fighter-stats {
-  bottom: 3%;
-  left: 3%;
+  align-self: flex-start;
+  margin-top: auto;
 }
 
 .stat {
-  margin: 0;
+  margin-bottom: 5px;
+  font-size: 16px;
 }
 
-.predictor {
+.predictor-column {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 2px;
-  margin: 2px;
-  height: 100%; 
-  width: 100%;
-  color: #ffffff;
+  justify-content: center;  
+  align-items: center;  
+  height: 100%;  
 }
 
-.predictor h1 {
-  text-align: center;
+.predictor-title h1 {
+  margin-top: 0;
+  margin-bottom: 20px; 
 }
 
-.predictor p {
-  text-align: center;
-  font-weight: 100;
-  font-size: 16px;
-}
-
-.predictor form {
-  display: flex;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px 0;
+.predictor-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center;  
+  gap: 15px;  
 }
 
-.predictor label {
-  margin-bottom: 10px;
-  color: #ffffff;
-  font-size: 16px;
+.predictor-form form {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  gap: 15px;  
 }
 
-.predictor input[type="text"] {
-  border: none;
-  border-bottom: 2px solid #ffffff;
-  background-color: transparent;
-  color: #ffffff;
-  padding: 5px;
-  margin-bottom: 20px;
-  font-size: 16px;
-  outline: none;
+.predictor-prediction {
+  margin-top: 20px;
 }
 
-.predictor input[type="text"]:focus {
-  border-color: #cf1d0d; 
-}
 
-.predictor button {
-  background-color: #cf1d0d;
-  color: #ffffff;
+/* Button Styling */
+button {
   padding: 10px 20px;
+  background-color: #cf1d0d;
+  color: white;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.predictor button:hover {
-  background-color: #cf1d0d94; 
+button:hover {
+  background-color: #cf1d0d93;
 }
 
-
-
-@media only screen and (max-width: 768px) {
-  
-  p {
-    font-size: 16px;
-  }
-
-  h1 {
-    font-size: 24px;
-  }
-  
-  .fighter-name .first-name, .fighter-name .last-name {
-    font-size: 24px;
-  }
-}
-@media only screen and (max-height: 600px) {
-  
-  p {
-    font-size: 16px;
-  }
-
-  h1 {
-    font-size: 24px;
-  }
-  
-  .fighter-name .first-name, .fighter-name .last-name {
-    font-size: 24;
-  }
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
 }
 
+label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+Select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid white;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, 0.7);
+}

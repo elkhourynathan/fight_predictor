@@ -3,6 +3,7 @@ import sqlite3
 # # # from langchain import OpenAI, SQLDatabase
 # # from langchain.agents import create_sql_agent, AgentType
 # from langchain.agents.agent_toolkits import SQLDatabaseToolkit
+import json
 from dotenv import load_dotenv
 from .webscraper import scrape_fighter_details
 
@@ -139,6 +140,17 @@ def retrieve_fighter(fighter_name):
         except:
             return None
 
+def get_all_unique_fighter_names():
+    with sqlite3.connect(database=db_path) as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT DISTINCT "Fighter1" FROM ufc_event_data UNION SELECT DISTINCT "Fighter2" FROM ufc_event_data')
+        rows = cursor.fetchall()
+        fighter_names = [{"value": row[0], "label": row[0]} for row in rows]
+
+        with open("fighter_names.json", "w") as f:
+            json.dump(fighter_names, f)
+
+get_all_unique_fighter_names()
 
 # # print(retrieve_fighter("Conor McGregor"))
 # print(retrieve_fighter("Khabib Nurmagomedov"))
