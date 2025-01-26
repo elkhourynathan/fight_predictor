@@ -5,7 +5,8 @@ from datetime import datetime
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-
+from sklearn.ensemble import VotingClassifier
+import xgboost as xgb
 
 file_path = 'ufc_data/fight_event_data/ufc_event_data.csv'
 
@@ -173,21 +174,32 @@ y = training_data_clean['Winner'].astype(int)
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-logreg = LogisticRegression()
+# Initialize base models
+logreg = LogisticRegression(random_state=42)
+xgb_model = xgb.XGBClassifier(random_state=42)
 
-# Train the model
-logreg.fit(X_train, y_train)
+# Create ensemble
+ensemble_model = VotingClassifier(
+    estimators=[('lr', logreg), ('xgb', xgb_model)],
+    voting='soft'
+)
 
-# Make predictions and evaluate
-y_pred = logreg.predict(X_test)
+# Train and evaluate ensemble
+ensemble_model.fit(X_train, y_train)
+y_pred = ensemble_model.predict(X_test)
 
+# Calculate metrics
 accuracy = accuracy_score(y_test, y_pred)
 conf_matrix = confusion_matrix(y_test, y_pred)
 class_report = classification_report(y_test, y_pred)
 
-print(accuracy, conf_matrix, class_report)
+print(f"Ensemble Accuracy: {accuracy:.4f}")
+print("\nConfusion Matrix:")
+print(conf_matrix)
+print("\nClassification Report:")
+print(class_report)
 
-# Save the model and fighter profiles
-joblib.dump(logreg, 'ml/logreg_fight_predictor.pkl')
+# Save ensemble model and fighter profiles
+joblib.dump(ensemble_model, 'ml/ensemble_fight_predictor.pkl')
 fighter_profiles.to_csv('ml/fighter_profiles.csv', index=False)
 
